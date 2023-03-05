@@ -33,7 +33,6 @@ int	is_found(char *ptr, char *str)
 	i = 0;
 	ret = 0;
 	comparision(ptr, str, &ret, i);
-	free(ptr);
 	return (ret);
 }
 
@@ -55,6 +54,8 @@ int	get_instraction(char *ptr, t_stack *a, t_stack *b)
 		reverse_retate_a(a, b, 1);
 	else if (is_found(ptr, "rrb\n"))
 		reverse_retate_b(a, b, 1);
+	else if (is_found(ptr, "rrr\n"))
+		reverse_retate(a, b, 1);
 	else
 		return (ft_putstr_fd("Error\n", 2), FALSE);
 	return (TRUE);
@@ -69,7 +70,10 @@ int	handling_checker(t_stack *a, t_stack *b)
 	{
 		ptr = get_next_line(0);
 		if (!ptr)
+		{
+			free(ptr);
 			break ;
+		}
 		if (!get_instraction(ptr, a, b))
 			return (free(b->item), free(a->item), free(ptr), FALSE);
 	}
